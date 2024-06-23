@@ -10,12 +10,19 @@ import ServiceDetail from './components/PropertyDetails/ServiceDetail';
 import BookingConfirmation from './BookingConfirmation';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import { useState } from 'react';
+import Profile from './Profile';
+import Chat from './Chat';
 
 const App = () => {
+    const [login,setLogin] = useState(false)
+    const handleLogin= ()=>{
+        setLogin(!login)
+    }
     return (
         <ServiceProvider>
             <Container maxW='100%' px='6'>
-                <Header />
+                <Header login={login} handleLogin={handleLogin}/>
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='service-details' element={<ServiceDetails />}>
@@ -30,8 +37,11 @@ const App = () => {
                             </main>
                         }
                     />
-                     <Route path="/login" element={<Login />} />
-                     <Route path="/signup" element={<Signup />} />
+                     <Route path="/login" element={<Login login={login} handleLogin={handleLogin} />} />
+                     <Route path="/signup" element={<Signup login={login} handleLogin={handleLogin} />} />
+                     <Route path='/profile' element={<Profile/>}/>
+                     <Route path='/chat' element={<Chat/>}/>
+
                 </Routes>
             </Container>
             <Footer />

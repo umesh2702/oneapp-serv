@@ -1,9 +1,22 @@
-import { Flex, Heading, Button,  HStack, chakra, ButtonGroup, useBreakpointValue, Divider } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Flex, Heading, Button, HStack, chakra, ButtonGroup, useBreakpointValue } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
 import NavMobile from './NavMobile';
+import { CgProfile } from "react-icons/cg";
+import { useEffect } from 'react';
 
-const Header = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true })
+const Header = ({ login, setLogin }) => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const navigate = useNavigate();
+
+  // Check if the user is logged in on component mount
+  
+
+  // Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    handleLogin()
+    navigate('/login');
+  };
 
   return (
     <chakra.header id="header" borderBottom='1px solid rgb(0,0,0,0.3)'>
@@ -13,28 +26,34 @@ const Header = () => {
         </Link>
         {
           isDesktop ? (
-          <>
-            <ButtonGroup as='nav' variant='link' spacing='5'>
+            <>
+              <ButtonGroup as='nav' variant='link' spacing='5'>
                 {
-                  ['Home', 'Features', 'About Us'].map((item)=>(
+                  ['Home', 'Features', 'About Us'].map((item) => (
                     <Button fontSize='16px' key={item}>{item}</Button>
-                    ))
+                  ))
                 }
-            </ButtonGroup>
+              </ButtonGroup>
 
-            <HStack>
-              <Button size='sm' variant='solid'>Contact</Button>
-            <Link to='/login'>  <Button size='sm' variant='outline'>Sign in</Button></Link>
-            </HStack>
-          </>
+              <HStack>
+                <Button size='sm' variant='solid'>Contact</Button>
+                {login ? (
+                  <>
+                  <Link to='/profile'>  <CgProfile fontSize={40} style={{ marginLeft: '20px' }} /></Link>
+                    <Button size='sm' variant='outline' onClick={handleLogout}>Logout</Button>
+                  </>
+                ) : (
+                  <Button size='sm' variant='outline'><Link to='/login'>Sign in</Link></Button>
+                )}
+              </HStack>
+            </>
           ) : (
             <NavMobile />
           )
         }
       </Flex>
-      {/* <Divider color='pink.800' w={}='20px' />  */}
     </chakra.header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
