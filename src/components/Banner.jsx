@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { BiPlus } from "react-icons/bi";
 
-import { bannerData } from "../data";
+import { bannerData } from "../data1";
 import Apartment1Lg from "../assets/images/apartments/a1lg.png";
 import Apartment6Lg from "../assets/images/apartments/a6lg.png";
 
@@ -22,13 +22,13 @@ const Banner = () => {
           flexGrow='1'
           px={{ sm: "6", md: "10" }}
           py={{ sm: '8',  md: "16" }}
-          bg="pink.100"
+          bg="blue.100"
           justify="center"
           align="left"
           borderRadius="xl"
         >
           <Heading fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}>
-            Find Real Estate That Suits You.
+            Find The Service That You Want.
           </Heading>
           <Text fontSize="sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
@@ -43,7 +43,7 @@ const Banner = () => {
             {bannerData.map((item, index) => (
               <VStack
                 key={index}
-                bg="pink.200"
+                bg="blue.200"
                 p="4"
                 borderRadius="md"
                 align="left"

@@ -9,7 +9,7 @@ const Header = () => {
     <chakra.header id="header" borderBottom='1px solid rgb(0,0,0,0.3)'>
       <Flex w='100%' py='5' align='center' justify='space-between'>
         <Link to='/'>
-          <Heading fontSize='3xl' color='pink.700'>Estatery.</Heading>
+          <Heading fontSize='3xl' color='blue.700'>Estatery.</Heading>
         </Link>
         {
           isDesktop ? (
@@ -24,7 +24,7 @@ const Header = () => {
 
             <HStack>
               <Button size='sm' variant='solid'>Contact</Button>
-              <Button size='sm' variant='outline'>Sign up</Button>
+            <Link to='/login'>  <Button size='sm' variant='outline'>Sign in</Button></Link>
             </HStack>
           </>
           ) : (

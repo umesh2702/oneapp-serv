@@ -1,34 +1,42 @@
 import { Routes, Route } from 'react-router-dom';
-import { Container } from '@chakra-ui/react'
+import { Container } from '@chakra-ui/react';
 
 import Header from './components/Header/Header';
 import Home from './routes/Home';
-import PropertyDetails from './routes/PropertyDetails';
-import Footer from './components/Footer'
-import HouseProvider from './context/HouseContext';
-import HouseDetails from './components/PropertyDetails/HouseDetails';
+import ServiceDetails from './routes/ServiceDetails';
+import Footer from './components/Footer';
+import ServiceProvider from './context/ServiceContext';
+import ServiceDetail from './components/PropertyDetails/ServiceDetail';
+import BookingConfirmation from './BookingConfirmation';
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/Signup';
 
 const App = () => {
-  return (
-    <HouseProvider>
-      <Container maxW='container.lg' px='6'>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='property-details' element={ <PropertyDetails /> } >
-            <Route path=":propertyId" element={<HouseDetails />} />
-          </Route>
-          <Route path="*"
-                element={ <main style={{ padding: "1rem" }}>
-                            <p>There's nothing here!</p>
-                          </main>
+    return (
+        <ServiceProvider>
+            <Container maxW='100%' px='6'>
+                <Header />
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='service-details' element={<ServiceDetails />}>
+                        <Route path=':serviceId' element={<ServiceDetail />} />
+                    </Route>
+                    <Route path='/confirm-booking/:serviceId' element={<BookingConfirmation />} />
+                    <Route
+                        path='*'
+                        element={
+                            <main style={{ padding: '1rem' }}>
+                                <p>There's nothing here!</p>
+                            </main>
                         }
-          />
-        </Routes>
-      </Container>
-      <Footer />
-    </HouseProvider>
-  )
-}
+                    />
+                     <Route path="/login" element={<Login />} />
+                     <Route path="/signup" element={<Signup />} />
+                </Routes>
+            </Container>
+            <Footer />
+        </ServiceProvider>
+    );
+};
 
-export default App
+export default App;

@@ -1,4 +1,4 @@
-import { extendTheme, theme as base, withDefaultVariant } from "@chakra-ui/react"
+import { extendTheme, theme as base } from "@chakra-ui/react"
 
 const breakpoints = {
   sm: '320px',
@@ -9,39 +9,53 @@ const breakpoints = {
 }
 
 export const theme = extendTheme({
-  breakpoints, 
+  breakpoints,
+  colors: {
+    primary: {
+      50: '#ebf8ff',
+      100: '#bee3f8',
+      200: '#90cdf4',
+      300: '#63b3ed',
+      400: '#4299e1',
+      500: '#3182ce',
+      600: '#2b6cb0',
+      700: '#2c5282',
+      800: '#2a4365',
+      900: '#1A365D',
+    },
+  },
   fonts: {
     heading: `'Roboto Slab', ${base.fonts.heading}`,
     body: `'Montserrat', sans-serif`,
   },
   styles: {
     global: {
-        body: {
-            bg: 'pink.50'
-        }
+      body: {
+        bg: 'primary.50', // Use lightest shade of blue as background
+      }
     }
   },
   components: {
     Button: {
       defaultProps: {
-        colorScheme: 'pink', // default is gray
+        colorScheme: 'primary', // Use primary color scheme for buttons
       }
     },
-    Input:{
+    Input: {
       defaultProps: {
-        focusBorderColor: 'pink.500'
+        focusBorderColor: 'primary.500' // Use primary color for input focus border
       }
     },
-    Select:{
+    Select: {
       baseStyle: {
         _focus: {
-          borderColor: 'pink.500'
+          borderColor: 'primary.500' // Use primary color for select focus border
         }
       }
     },
-    Textarea:{
+    Textarea: {
       defaultProps: {
-        focusBorderColor: 'pink.500'
+        focusBorderColor: 'primary.500' // Use primary color for textarea focus border
       }
     }
   }

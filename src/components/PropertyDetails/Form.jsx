@@ -1,30 +1,36 @@
-import { Textarea, Image, VStack, HStack, Box, Text, Input, Button } from '@chakra-ui/react'
+import { VStack, Box, Text, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
-const Form = ({searchedHouse}) => {
-  return (
-    <VStack border='1px' borderColor='pink.100' boxShadow='md' px='5' py='6'>
-        <HStack>
-            <Image borderRadius='full' boxSize='75px' src={searchedHouse.agent.image} />
+const Form = ({ searchedService }) => {
+    const navigate = useNavigate();
+
+    const handleBookNow = () => {
+        // Simulate booking confirmation and navigate to confirmation page
+        navigate(`/confirm-booking/${searchedService.id}`);
+    };
+
+    return (
+        <VStack border='1px' borderColor='pink.100' boxShadow='md' px='5' py='6' w='100%' maxW='400px'>
             <Box>
-                <Text mb='-3px' fontWeight='extrabold' fontSize='15px'>{searchedHouse.agent.name}</Text>
-                <Text style={{fontSize: '12px'}}>+{searchedHouse.agent.phone}</Text>
+                <Text mb='2' fontWeight='bold' fontSize='lg'>
+                    {searchedService.name}
+                </Text>
+                
+                <Text fontSize='sm' color='gray.600'>
+                    {searchedService.description}
+                </Text>
+                <Text mb='2' fontWeight='bold' fontSize='lg'>
+                    {searchedService.contact.phone}
+                </Text>
+                <Text mt='2' fontSize='md'>
+                    <strong>Price:</strong> ${searchedService.price} per {searchedService.duration}
+                </Text>
             </Box>
-        </HStack>
-
-        <VStack my='3px' spacing='2px'>
-            <form>
-                <Input mt='3' mb='2' placeholder="Name*" />
-                <Input placeholder="Email*" />
-                <Input my='2' placeholder="Phone*" />
-                <Textarea my='2' placeholder='Message*' size='sm'  defaultValue='Hello, I am interested in [Modern apartment]' />
-                <HStack my='2'>
-                    <Button w='full' px='4'>Send Message</Button>
-                    <Button w={{base: 'full', md: '50%'}} variant='outline'>Call</Button>
-                </HStack>
-            </form>
+            <Button w='60%' mt='3' colorScheme='blue' onClick={handleBookNow}>
+                Book Now
+            </Button>
         </VStack>
-    </VStack>
-  )
-}
+    );
+};
 
-export default Form
+export default Form;
