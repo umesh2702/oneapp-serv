@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './Chat.css';
 import axios from 'axios';
-import profile from './assets/images/providers/profile.png';
+import { FaUserCircle } from 'react-icons/fa';
+import './Chat.css';
 
 const Chat = ({ onClose }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [typing, setTyping] = useState(false); // State to manage typing animation
 
   useEffect(() => {
     const storedMessages = JSON.parse(sessionStorage.getItem('chatMessages')) || [];
@@ -13,10 +14,16 @@ const Chat = ({ onClose }) => {
   }, []);
 
   const sendMessage = async () => {
+    const trimmedMessage = inputMessage.trim();
+    if (trimmedMessage === '') return;
+
     const newMessage = {
       sender: 'user',
-      text: inputMessage.trim(),
+      text: trimmedMessage,
     };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setInputMessage('');
 
     try {
       const apiUrl = messages.length === 0
@@ -28,6 +35,9 @@ const Chat = ({ onClose }) => {
         throw new Error('JWT token not found in localStorage');
       }
 
+      // Start typing animation
+      setTyping(true);
+
       const response = await axios.post(apiUrl, {
         question: newMessage.text,
       }, {
@@ -36,31 +46,54 @@ const Chat = ({ onClose }) => {
         }
       });
 
+      // Stop typing animation
+      setTyping(false);
+
+      const cleanText = (text) => {
+        return text.replace(/\*\*.*?\*\*|\n/g, '').trim();
+      };
+
       const botResponse = {
         sender: 'bot',
-        text: response.data.answer,
+        text: cleanText(response.data.response),
       };
-      const updatedMessages = [...messages, newMessage, botResponse];
-      setMessages(updatedMessages);
-      sessionStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+
+      setMessages((prevMessages) => {
+        const updatedMessages = [...prevMessages, botResponse];
+        sessionStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+        return updatedMessages;
+      });
     } catch (error) {
       console.error('Error sending/receiving message:', error);
-      // Handle error state or redirect to login
     }
   };
 
   const handleCloseChat = () => {
     sessionStorage.removeItem('chatMessages');
-    onClose();
+    if (onClose && typeof onClose === 'function') {
+      onClose();
+    } else {
+      console.error('onClose is not a function or not provided');
+    }
+  };
+
+  const TypingAnimation = () => {
+    return (
+      <div className="typing-animation">
+        <span className="dot">.</span>
+        <span className="dot">.</span>
+        <span className="dot">.</span>
+      </div>
+    );
   };
 
   return (
     <div className="mobile-chat-container">
       <div className="mobile-chat-border">
         <div className="chat-header">
-          <img src={profile} alt="Avatar" className="profile-avatar" />
+          <FaUserCircle className="profile-icon" />
           <h5>Chatbot</h5>
-          <button className="close-button" onClick={handleCloseChat}>Close</button>
+          <button className="close-button" onClick={handleCloseChat}>✖</button>
         </div>
         <div className="chat-messages">
           {messages.map((message, index) => (
@@ -68,6 +101,7 @@ const Chat = ({ onClose }) => {
               {message.text}
             </div>
           ))}
+          {typing && <TypingAnimation />} {/* Render typing animation when typing is true */}
         </div>
         <div className="chat-input-form">
           <input

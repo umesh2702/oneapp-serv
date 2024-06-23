@@ -11,15 +11,18 @@ const Home = () => {
     setChatOpen(!chatOpen);
   };
 
+  const handleCloseChat = () => {
+    setChatOpen(false);
+  };
+
   return (
     <>
       <Banner />
       <ServiceList />
       <AIChatButton onClick={handleAIChatClick} />
-      {chatOpen && <Chat />}
+      {chatOpen && <Chat onClose={handleCloseChat} />}
     </>
   );
 };
 
 export default Home;
-  
