@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Login = ({login, handleLogin}) => {
-  const navigate = useNavigate(); // Rename history to navigate
+const Login = ({ handleLogin }) => {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,13 +19,13 @@ const Login = ({login, handleLogin}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:9999/api/c3/user/login', formData);
-      handleLogin()
+      const response = await axios.post('http://localhost:9999/api/c3/ser/login', formData);
       localStorage.setItem('jwtToken', response.data.jwtToken);
-      navigate('/'); // Use navigate instead of history.push
+      handleLogin();
+      navigate('/profile');
     } catch (error) {
       console.error('Login error:', error);
-      // Handle error (e.g., show error message)
+      setError('Invalid email or password. Please try again.'); // Set error state for displaying alert
     }
   };
 
@@ -31,6 +33,7 @@ const Login = ({login, handleLogin}) => {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Login</h2>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit} className="auth-form">
           <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
           <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />

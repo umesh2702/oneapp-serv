@@ -24,23 +24,11 @@ const App = () => {
             <Container maxW='100%' px='6'>
                 <Header login={login} handleLogin={handleLogin}/>
                 <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='service-details' element={<ServiceDetails />}>
-                        <Route path=':serviceId' element={<ServiceDetail />} />
-                    </Route>
-                    <Route path='/confirm-booking/:serviceId' element={<BookingConfirmation />} />
-                    <Route
-                        path='*'
-                        element={
-                            <main style={{ padding: '1rem' }}>
-                                <p>There's nothing here!</p>
-                            </main>
-                        }
-                    />
-                     <Route path="/login" element={<Login login={login} handleLogin={handleLogin} />} />
+                    <Route path='/' element={<Login handleLogin={handleLogin}/>} />
+                   
                      <Route path="/signup" element={<Signup login={login} handleLogin={handleLogin} />} />
                      <Route path='/profile' element={<Profile/>}/>
-                     <Route path='/chat' element={<Chat/>}/>
+                     
 
                 </Routes>
             </Container>

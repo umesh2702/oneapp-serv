@@ -13,6 +13,8 @@ import { BiPlus } from "react-icons/bi";
 import { bannerData } from "../data1";
 import Apartment1Lg from "../assets/images/apartments/a1lg.png";
 import Apartment6Lg from "../assets/images/apartments/a6lg.png";
+import elec from '../assets/images/providers/electrician3.jpeg'
+import paint from '../assets/images/providers/paint.jpeg'
 
 const Banner = () => {
   return (
@@ -62,26 +64,19 @@ const Banner = () => {
         </VStack>
 
         <VStack justify='center'>
-          <Box h='100%' display={{ base: "none", lg: "block", xl:'none' }} >
-            <Image
-              src={Apartment1Lg}
-              alt="house"
-              h='100%'
-              objectFit='cover'
-            />
-          </Box>
+          
           <Box h='50%' display={{ base: "none", xl: "block" }}>
             <Image
-              src={Apartment1Lg}
+              src={elec}
               alt="house"
               style={{height: '100%', width: '100%', objectFit: 'contain'}}
             />
           </Box>
           <Box h='50%' display={{ base: "none", xl: "block" }}>
             <Image
-              src={Apartment6Lg}
+              src={paint}
               alt="house"
-              style={{height: '100%', width: '100%', objectFit: 'contain'}}
+              style={{height: '400px', width: '100%', objectFit: 'contain'}}
             />
           </Box>
         </VStack>

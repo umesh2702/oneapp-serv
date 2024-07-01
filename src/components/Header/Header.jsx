@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import NavMobile from './NavMobile';
 import { CgProfile } from "react-icons/cg";
 import { useEffect } from 'react';
+import logo from '../../assets/images/logo.png'
 
-const Header = ({ login, setLogin }) => {
+const Header = ({ login, handleLogin }) => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const Header = ({ login, setLogin }) => {
     <chakra.header id="header" borderBottom='1px solid rgb(0,0,0,0.3)'>
       <Flex w='100%' py='5' align='center' justify='space-between'>
         <Link to='/'>
-          <Heading fontSize='3xl' color='blue.700'>Estatery.</Heading>
+          <Heading fontSize='xl' color='blue.700'><img src={logo} alt="" style={{height:'60px'}}/></Heading>
         </Link>
         {
           isDesktop ? (
@@ -40,10 +41,10 @@ const Header = ({ login, setLogin }) => {
                 {login ? (
                   <>
                   <Link to='/profile'>  <CgProfile fontSize={40} style={{ marginLeft: '20px' }} /></Link>
-                    <Button size='sm' variant='outline' onClick={handleLogout}>Logout</Button>
+                    <Button size='sm' variant='outline' onClick={handleLogin}>Logout</Button>
                   </>
                 ) : (
-                  <Button size='sm' variant='outline'><Link to='/login'>Sign in</Link></Button>
+                  <Button size='sm' variant='outline'><Link to='/'>Sign in</Link></Button>
                 )}
               </HStack>
             </>
